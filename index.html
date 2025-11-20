@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodePath Finder - Temukan Jalur Coding-mu!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .option-card {
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .option-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        .question {
+            display: none;
+        }
+        
+        .question.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                <i class="fas fa-rocket mr-3"></i>CodePath Finder
+            </h1>
+            <p class="text-xl text-white opacity-90">Temukan jalur coding yang paling cocok untukmu!</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden card-hover">
+            <!-- Progress Bar -->
+            <div class="h-2 bg-gray-200">
+                <div id="progress" class="h-full gradient-bg progress-bar" style="width: 0%"></div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div class="p-6 md:p-10">
+                <!-- Question Counter -->
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-sm font-medium text-gray-500">
+                        Pertanyaan <span id="currentQuestionNum">1</span> dari <span id="totalQuestions">5</span>
+                    </div>
+                    <div class="text-sm font-medium text-gray-500">
+                        <span id="progressPercent">0</span>% Selesai
+                    </div>
+                </div>
+
+                <!-- Question 1 -->
+                <div class="question active fade-in" id="q1">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-bullseye text-purple-600 mr-2"></i>
+                            Apa tujuan utama kamu belajar coding?
+                        </h3>
+                        <p class="text-gray-600">Pilih yang paling sesuai dengan keinginanmu saat ini</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="project">
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-lightbulb text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Bikin Project/Startup Sendiri</h4>
+                                    <p class="text-gray-600 text-sm">Ingin wujudkan ide menjadi aplikasi atau website</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="career">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-briefcase text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Dapat Kerja dengan Gaji Tinggi</h4>
+                                    <p class="text-gray-600 text-sm">Mau karir yang stabil dan penghasilan baik</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="freelance">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-laptop-house text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Kerja Freelance yang Fleksibel</h4>
+                                    <p class="text-gray-600 text-sm">Ingin bebas atur waktu dan tempat kerja</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="hobby">
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-gamepad text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Iseng & Hobi Saja</h4>
+                                    <p class="text-gray-600 text-sm">Cuma pengen tahu dan mencoba-coba</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" id="nextBtn1" onclick="nextQuestion()" disabled>
+                        Lanjut <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question fade-in" id="q2">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-user-tie text-purple-600 mr-2"></i>
+                            Kamu lebih suka kerja seperti apa?
+                        </h3>
+                        <p class="text-gray-600">Pilih lingkungan kerja yang membuatmu nyaman</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="structured">
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-sitemap text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Terstruktur & Predictable</h4>
+                                    <p class="text-gray-600 text-sm">Suka dengan jadwal dan aturan yang jelas</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="creative">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-palette text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Kreatif & Bebas Berekspresi</h4>
+                                    <p class="text-gray-600 text-sm">Ingin mencoba hal baru dan inovatif</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="analytic">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Analitis & Problem-Solving</h4>
+                                    <p class="text-gray-600 text-sm">Suka memecahkan masalah kompleks</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="flexible">
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-globe text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Flexible & Remote</h4>
+                                    <p class="text-gray-600 text-sm">Bisa kerja dari mana saja</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" id="nextBtn2" onclick="nextQuestion()" disabled>
+                        Lanjut <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question fade-in" id="q3">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-clock text-purple-600 mr-2"></i>
+                            Waktu belajar yang bisa kamu sisihkan?
+                        </h3>
+                        <p class="text-gray-600">Jujur saja, berapa waktu yang bisa kamu dedikasikan</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="fulltime">
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-calendar-week text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Full-time (40+ jam/minggu)</h4>
+                                    <p class="text-gray-600 text-sm">Serius mau belajar coding</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="parttime">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-calendar-day text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Part-time (15-25 jam/minggu)</h4>
+                                    <p class="text-gray-600 text-sm">Belajar sambil kerja/kuliah</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="weekend">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-calendar-alt text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Weekend Warrior (5-10 jam/minggu)</h4>
+                                    <p class="text-gray-600 text-sm">Fokus belajar di akhir pekan</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="casual">
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-coffee text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Santai Aja (1-5 jam/minggu)</h4>
+                                    <p class="text-gray-600 text-sm">Belajar dikala senggang</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" id="nextBtn3" onclick="nextQuestion()" disabled>
+                        Lanjut <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question fade-in" id="q4">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-laptop-code text-purple-600 mr-2"></i>
+                            Bagian mana dari website yang paling menarik minatmu?
+                        </h3>
+                        <p class="text-gray-600">Pilih yang paling kamu sukai atau penasaran</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="frontend">
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-paint-brush text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Tampilan & Desain (Frontend)</h4>
+                                    <p class="text-gray-600 text-sm">Suka membuat halaman website menarik</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="backend">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-server text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Sistem & Logika (Backend)</h4>
+                                    <p class="text-gray-600 text-sm">Tertarik dengan cara kerja di balik layar</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="database">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-database text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Pengelolaan Data</h4>
+                                    <p class="text-gray-600 text-sm">Suka mengatur dan menganalisis data</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="unsure">
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-question-circle text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Masih Bingung</h4>
+                                    <p class="text-gray-600 text-sm">Belum tahu perbedaannya</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" id="nextBtn4" onclick="nextQuestion()" disabled>
+                        Lanjut <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question fade-in" id="q5">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-graduation-cap text-purple-600 mr-2"></i>
+                            Bagaimana gaya belajar yang paling cocok untukmu?
+                        </h3>
+                        <p class="text-gray-600">Pilih cara belajar yang paling efektif menurutmu</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="visual">
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-eye text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Visual (Video & Demo)</h4>
+                                    <p class="text-gray-600 text-sm">Lebih mudah paham dengan lihat contoh</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="reading">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-book text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Membaca & Dokumentasi</h4>
+                                    <p class="text-gray-600 text-sm">Suka belajar dari teks dan panduan</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="practice">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-keyboard text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Praktik Langsung</h4>
+                                    <p class="text-gray-600 text-sm">Belajar sambil mencoba dan error</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card p-6 border-2 border-gray-200 rounded-xl cursor-pointer" data-value="interactive">
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-users text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-1">Interaktif (Kursus/Mentor)</h4>
+                                    <p class="text-gray-600 text-sm">Butuh bimbingan dan tanya jawab</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" id="nextBtn5" onclick="showResult()" disabled>
+                        Lihat Hasil! <i class="fas fa-star ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result hidden p-6 md:p-10" id="result">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">
+                        <i class="fas fa-trophy text-yellow-500 mr-2"></i>
+                        Ini Dia Jalur Coding-mu!
+                    </h2>
+                    <p class="text-gray-600">Berdasarkan jawabanmu, kami merekomendasikan:</p>
+                </div>
+                
+                <div class="path-card gradient-bg rounded-2xl p-8 text-white shadow-lg mb-8" id="pathResult">
+                    <!-- Hasil akan dimasukkan di sini oleh JavaScript -->
+                </div>
+
+                <div class="text-center space-y-4">
+                    <div class="flex flex-col md:flex-row gap-4 justify-center">
+                        <button class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300" onclick="restartQuiz()">
+                            Coba Lagi <i class="fas fa-redo ml-2"></i>
+                        </button>
+                        <a href="index2.html" class="inline-block bg-white text-purple-600 font-semibold py-3 px-8 rounded-full hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-home mr-2"></i> Kembali ke Landing Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-white opacity-80">
+            <p>Dibuat dengan <i class="fas fa-heart text-red-400"></i> untuk calon coder Indonesia</p>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const answers = {};
+        const totalQuestions = 5;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set total questions
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            
+            // Setup option click handlers
+            setupOptionHandlers();
+            
+            // Update progress
+            updateProgress();
+        });
+
+        // Setup option click handlers
+        function setupOptionHandlers() {
+            document.querySelectorAll('.option-card').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = this.closest('.question').id;
+                    const questionNum = questionId.substring(1);
+                    
+                    // Remove selected from siblings
+                    this.parentElement.querySelectorAll('.option-card').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected to clicked option
+                    this.classList.add('selected');
+                    
+                    // Save answer
+                    answers[questionId] = this.getAttribute('data-value');
+                    
+                    // Enable next button
+                    document.getElementById('nextBtn' + questionNum).disabled = false;
+                });
+            });
+        }
+
+        // Update progress indicators
+        function updateProgress() {
+            const progress = ((currentQuestion - 1) / totalQuestions) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('currentQuestionNum').textContent = currentQuestion;
+            document.getElementById('progressPercent').textContent = Math.round(progress);
+        }
+
+        // Next question
+        function nextQuestion() {
+            // Hide current question
+            document.getElementById('q' + currentQuestion).classList.remove('active');
+            
+            // Move to next question
+            currentQuestion++;
+            
+            // Show next question
+            document.getElementById('q' + currentQuestion).classList.add('active');
+            
+            // Update progress
+            updateProgress();
+        }
+
+        // Show result
+        function showResult() {
+            // Hide current question
+            document.getElementById('q' + currentQuestion).classList.remove('active');
+            
+            // Show result
+            document.getElementById('result').classList.remove('hidden');
+            
+            // Update progress to 100%
+            document.getElementById('progress').style.width = '100%';
+            document.getElementById('progressPercent').textContent = '100';
+            
+            // Generate and display result
+            const result = generateRecommendation();
+            document.getElementById('pathResult').innerHTML = result;
+        }
+
+        // Generate recommendation logic
+        function generateRecommendation() {
+            const goal = answers.q1;
+            const workStyle = answers.q2;
+            const timeCommitment = answers.q3;
+            const interestArea = answers.q4;
+            const learningStyle = answers.q5;
+
+            let path = '';
+            let icon = '💻';
+            let title = '';
+            let description = '';
+            let steps = '';
+            let resources = '';
+
+            // Logic rekomendasi yang lebih detail
+            if (goal === 'project' && workStyle === 'creative' && interestArea === 'frontend') {
+                title = '🎨 Frontend Creative Entrepreneur';
+                description = 'Kamu cocok jadi founder yang fokus pada tampilan dan pengalaman pengguna!';
+                steps = `
+                    <h4 class="text-xl font-semibold mb-3">🚀 Langkah Pertama:</h4>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>HTML & CSS Dasar (2 minggu)</li>
+                        <li>JavaScript Fundamental (3 minggu)</li>
+                        <li>React.js untuk UI Interaktif (1 bulan)</li>
+                        <li>Desain UI/UX dengan Figma (2 minggu)</li>
+                        <li>Build MVP project pertama (1 bulan)</li>
+                    </ol>
+                `;
+                resources = `
+                    <h4 class="text-xl font-semibold mb-3 mt-6">📚 Rekomendasi Belajar:</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Kelas: MDN Web Docs, FreeCodeCamp</li>
+                        <li>Project: Buat portfolio website, clone aplikasi populer</li>
+                        <li>Community: Discord Frontend Developer Indonesia</li>
+                    </ul>
+                `;
+            } else if (goal === 'career' && workStyle === 'structured' && interestArea === 'backend') {
+                title = '💼 Backend Specialist';
+                description = 'Kamu cocok di corporate dengan sistem yang terstruktur dan fokus pada logika!';
+                steps = `
+                    <h4 class="text-xl font-semibold mb-3">📈 Career Path:</h4>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>JavaScript/Python Fundamental (1 bulan)</li>
+                        <li>Node.js/Django Framework (1.5 bulan)</li>
+                        <li>Database & SQL (2 minggu)</li>
+                        <li>API Development & Testing (1 bulan)</li>
+                        <li>Deploy & Infrastructure (2 minggu)</li>
+                    </ol>
+                `;
+                resources = `
+                    <h4 class="text-xl font-semibold mb-3 mt-6">📚 Rekomendasi Belajar:</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Kelas: Coursera, Udemy, BuildWithAngga</li>
+                        <li>Certification: AWS/Azure Cloud Practitioner</li>
+                        <li>Portfolio: RESTful API project, microservices</li>
+                    </ul>
+                `;
+            } else if (goal === 'freelance' && workStyle === 'flexible' && interestArea === 'frontend') {
+                title = '🌍 Frontend Freelance Developer';
+                description = 'Kamu cocok kerja remote dari mana aja dengan fokus pada tampilan website!';
+                steps = `
+                    <h4 class="text-xl font-semibold mb-3">💫 Freedom Plan:</h4>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>HTML, CSS, JavaScript Dasar (1 bulan)</li>
+                        <li>React.js & State Management (1.5 bulan)</li>
+                        <li>Responsive Design & CSS Framework (2 minggu)</li>
+                        <li>Build 3 Portfolio Projects (1 bulan)</li>
+                        <li>Setup Freelance Profile & Branding (2 minggu)</li>
+                    </ol>
+                `;
+                resources = `
+                    <h4 class="text-xl font-semibold mb-3 mt-6">📚 Rekomendasi Belajar:</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Kelas: Scrimba, Frontend Masters</li>
+                        <li>Platform: Upwork, Fiverr, Projects.co.id</li>
+                        <li>Networking: LinkedIn, Tech Meetups</li>
+                    </ul>
+                `;
+            } else if (goal === 'hobby' && timeCommitment === 'casual') {
+                title = '🌟 Casual Coder Explorer';
+                description = 'Kamu bisa explore coding dengan santai tanpa tekanan!';
+                steps = `
+                    <h4 class="text-xl font-semibold mb-3">🌈 Fun Learning Path:</h4>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Coba HTML & CSS dasar (1 minggu)</li>
+                        <li>JavaScript sederhana untuk interaksi (2 minggu)</li>
+                        <li>Buat halaman web personal (1 minggu)</li>
+                        <li>Eksplorasi area yang menarik (sesuka hati)</li>
+                        <li>Bergabung dengan coding community</li>
+                    </ol>
+                `;
+                resources = `
+                    <h4 class="text-xl font-semibold mb-3 mt-6">📚 Rekomendasi Belajar:</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Platform: Codecademy, freeCodeCamp</li>
+                        <li>Project: Personal website, simple game</li>
+                        <li>Community: Forum Discord, Reddit</li>
+                    </ul>
+                `;
+            } else if (interestArea === 'database' || (workStyle === 'analytic' && goal === 'career')) {
+                title = '📊 Data & Backend Specialist';
+                description = 'Kamu punya bakat dalam mengelola data dan sistem yang kompleks!';
+                steps = `
+                    <h4 class="text-xl font-semibold mb-3">🔍 Data Specialist Path:</h4>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>SQL & Database Fundamental (2 minggu)</li>
+                        <li>Backend dengan Python/Node.js (1 bulan)</li>
+                        <li>API Development & Integration (2 minggu)</li>
+                        <li>Data Analysis & Visualization (2 minggu)</li>
+                        <li>Cloud & Deployment (2 minggu)</li>
+                    </ol>
+                `;
+                resources = `
+                    <h4 class="text-xl font-semibold mb-3 mt-6">📚 Rekomendasi Belajar:</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Kelas: DataCamp, Khan Academy</li>
+                        <li>Tools: PostgreSQL, MongoDB, Tableau</li>
+                        <li>Certification: Google Data Analytics</li>
+                    </ul>
+                `;
+            } else {
+                title = '🌟 Full-Stack Developer';
+                description = 'Kamu punya potensi di berbagai bidang! Jadi Full-Stack Developer adalah pilihan tepat!';
+                steps = `
+                    <h4 class="text-xl font-semibold mb-3">🚀 Full-Stack Journey:</h4>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Frontend Fundamental (HTML, CSS, JS) (1 bulan)</li>
+                        <li>Frontend Framework (React/Vue) (1 bulan)</li>
+                        <li>Backend & API (Node.js/Express) (1 bulan)</li>
+                        <li>Database (SQL/NoSQL) (2 minggu)</li>
+                        <li>Full-Stack Project (1 bulan)</li>
+                    </ol>
+                `;
+                resources = `
+                    <h4 class="text-xl font-semibold mb-3 mt-6">📚 Rekomendasi Belajar:</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Kelas: The Odin Project, App Academy</li>
+                        <li>Project: E-commerce, Social Media Clone</li>
+                        <li>Community: GitHub, Stack Overflow</li>
+                    </ul>
+                `;
+            }
+
+            // Tambahkan rekomendasi berdasarkan gaya belajar
+            let learningRecommendation = '';
+            if (learningStyle === 'visual') {
+                learningRecommendation = `
+                    <div class="mt-6 p-4 bg-white bg-opacity-20 rounded-lg">
+                        <h4 class="text-xl font-semibold mb-2">🎥 Tips untuk Visual Learner:</h4>
+                        <p>Fokus pada video tutorial, YouTube channels, dan demo interaktif. Rekomendasi: Traversy Media, Web Dev Simplified, Net Ninja.</p>
+                    </div>
+                `;
+            } else if (learningStyle === 'reading') {
+                learningRecommendation = `
+                    <div class="mt-6 p-4 bg-white bg-opacity-20 rounded-lg">
+                        <h4 class="text-xl font-semibold mb-2">📖 Tips untuk Reading Learner:</h4>
+                        <p>Baca dokumentasi resmi, buku programming, dan tutorial tertulis. Rekomendasi: MDN Docs, Eloquent JavaScript, freeCodeCamp guides.</p>
+                    </div>
+                `;
+            } else if (learningStyle === 'practice') {
+                learningRecommendation = `
+                    <div class="mt-6 p-4 bg-white bg-opacity-20 rounded-lg">
+                        <h4 class="text-xl font-semibold mb-2">⌨️ Tips untuk Practice Learner:</h4>
+                        <p>Langsung coding dan error adalah guru terbaikmu. Rekomendasi: CodeWars, LeetCode, Frontend Mentor, build project sejak hari pertama.</p>
+                    </div>
+                `;
+            } else if (learningStyle === 'interactive') {
+                learningRecommendation = `
+                    <div class="mt-6 p-4 bg-white bg-opacity-20 rounded-lg">
+                        <h4 class="text-xl font-semibold mb-2">👥 Tips untuk Interactive Learner:</h4>
+                        <p>Cari mentor, join bootcamp, atau coding community. Rekomendasi: Coding bootcamp lokal, Discord communities, meetup programming.</p>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="text-center mb-6">
+                    <div class="text-6xl mb-4">${icon}</div>
+                    <div class="path-title text-3xl font-bold mb-3">${title}</div>
+                    <div class="path-description text-lg opacity-90 max-w-2xl mx-auto">${description}</div>
+                </div>
+                
+                <div class="path-steps bg-white bg-opacity-10 p-6 rounded-xl">
+                    ${steps}
+                    ${resources}
+                    ${learningRecommendation}
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-lg opacity-90">Ingat, ini hanya rekomendasi awal! Kamu bisa menyesuaikan jalur belajar sesuai minat dan perkembanganmu.</p>
+                </div>
+            `;
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            // Reset current question
+            currentQuestion = 1;
+            
+            // Hide result and show first question
+            document.getElementById('result').classList.add('hidden');
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.getElementById('q1').classList.add('active');
+            
+            // Reset all selections and buttons
+            document.querySelectorAll('.option-card').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById('nextBtn' + i).disabled = true;
+            }
+            
+            // Reset progress
+            updateProgress();
+            
+            // Reset answers
+            for (let key in answers) {
+                delete answers[key];
+            }
+        }
+    </script>
+</body>
+</html>

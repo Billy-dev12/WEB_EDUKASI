@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeGen - Belajar Koding Seru untuk Gen Z</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        /* Custom animations dan utilities */
+        @layer utilities {
+            .glow {
+                box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+            }
+            .glow-intense {
+                box-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+            }
+            .text-glow {
+                text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.9); }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes slide-up {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fade-in {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .animate-slide-up {
+            animation: slide-up 0.5s ease-out forwards;
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out forwards;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1e293b, #4c1d95, #831843, #1e293b);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        .goal-card.selected {
+            border-color: #a855f7;
+            background-color: rgba(168, 85, 247, 0.1);
+        }
+
+        .goal-card.selected .checkmark {
+            display: block;
+        }
+
+        .code-line {
+            display: block;
+        }
+
+        .code-line.html-tag {
+            color: #ff79c6;
+        }
+
+        .code-line.html-attr {
+            color: #f1fa8c;
+        }
+
+        .code-line.js-keyword {
+            color: #ff79c6;
+        }
+
+        .code-line.js-string {
+            color: #f1fa8c;
+        }
+
+        .code-line.js-function {
+            color: #50fa7b;
+        }
+
+        .code-line.py-keyword {
+            color: #ff79c6;
+        }
+
+        .code-line.py-string {
+            color: #f1fa8c;
+        }
+
+        .code-line.py-function {
+            color: #50fa7b;
+        }
+
+        /* Accessibility */
+        *:focus {
+            outline: 2px solid #a855f7;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white min-h-screen">
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes fixed inset-0 pointer-events-none z-0">
+        <div
+            class="floating-shape absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-float">
+        </div>
+        <div class="floating-shape absolute top-3/4 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-float"
+            style="animation-delay: 1s;"></div>
+        <div class="floating-shape absolute top-1/2 left-3/4 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-float"
+            style="animation-delay: 2s;"></div>
+        <div class="floating-shape absolute top-1/3 right-1/3 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl animate-float"
+            style="animation-delay: 0.5s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-900/80 backdrop-blur-lg z-50 py-4 px-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-code text-white"></i>
+                </div>
+                <span class="text-xl font-bold">CodeGen</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#hero" class="hover:text-purple-400 transition-colors">Beranda</a>
+                <a href="#goals" class="hover:text-purple-400 transition-colors">Tujuan</a>
+                <a href="#stats" class="hover:text-purple-400 transition-colors">Statistik</a>
+                <a href="#testimonials" class="hover:text-purple-400 transition-colors">Testimoni</a>
+            </div>
+            <button class="md:hidden text-white">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+        <div class="absolute inset-0 gradient-bg opacity-30"></div>
+        <div class="container mx-auto px-4 text-center z-10 relative">
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-6 animate-fade-in">
+                <span class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+                    Coding Gak Harus Susah
+                </span>
+                <span class="animate-bounce inline-block">🚀</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-10 max-w-2xl mx-auto animate-fade-in"
+                style="animation-delay: 0.2s;">
+                Dari nol sampe bikin app sendiri. No cap, lebih gampang dari yang lo pikir!
+            </p>
+            <a href="index.html"
+                class="bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-2xl px-8 py-4 rounded-full text-lg font-bold animate-fade-in"
+                style="animation-delay: 0.4s;">Mulai Journey Kamu Sekarang!</a>
+            <!-- Floating emojis/shapes -->
+            <div class="absolute top-1/4 left-10 text-4xl animate-float" style="animation-delay: 0.5s;">💻</div>
+            <div class="absolute top-1/3 right-20 text-3xl animate-float" style="animation-delay: 1s;">🎮</div>
+            <div class="absolute bottom-1/4 left-1/4 text-5xl animate-float" style="animation-delay: 1.5s;">📱</div>
+            <div class="absolute bottom-1/3 right-1/3 text-4xl animate-float" style="animation-delay: 2s;">🚀</div>
+        </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section id="goals" class="py-20 px-4 relative z-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-4">Kenapa Lo Mau Belajar Koding?</h2>
+            <p class="text-xl text-slate-400 text-center mb-12">Pilih tujuan kamu, biar kami kasih roadmap yang pas!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Goal Card 1 -->
+                <div class="goal-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border-2 border-slate-700 hover:border-purple-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer"
+                    data-goal="startup">
+                    <div class="text-5xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Build Startup</h3>
+                    <p class="text-slate-400">Bikin aplikasi sendiri dan jadi founder next unicorn</p>
+                    <div class="checkmark hidden text-3xl text-green-400 mt-4">✓</div>
+                </div>
+
+                <!-- Goal Card 2 -->
+                <div class="goal-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border-2 border-slate-700 hover:border-purple-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer"
+                    data-goal="career">
+                    <div class="text-5xl mb-4">💼</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Career Switch</h3>
+                    <p class="text-slate-400">Pindah karir jadi software developer dengan gaji gede</p>
+                    <div class="checkmark hidden text-3xl text-green-400 mt-4">✓</div>
+                </div>
+
+                <!-- Goal Card 3 -->
+                <div class="goal-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border-2 border-slate-700 hover:border-purple-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer"
+                    data-goal="freelance">
+                    <div class="text-5xl mb-4">💰</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Freelance Hustle</h3>
+                    <p class="text-slate-400">Kerja remote, dapet duit dari mana aja, be your own boss</p>
+                    <div class="checkmark hidden text-3xl text-green-400 mt-4">✓</div>
+                </div>
+
+                <!-- Goal Card 4 -->
+                <div class="goal-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border-2 border-slate-700 hover:border-purple-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer"
+                    data-goal="game">
+                    <div class="text-5xl mb-4">🎮</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Bikin Game</h3>
+                    <p class="text-slate-400">Develop game impian kamu sendiri, siapa tau viral!</p>
+                    <div class="checkmark hidden text-3xl text-green-400 mt-4">✓</div>
+                </div>
+
+                <!-- Goal Card 5 -->
+                <div class="goal-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border-2 border-slate-700 hover:border-purple-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer"
+                    data-goal="creator">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Content Creator</h3>
+                    <p class="text-slate-400">Jadi tech influencer, sharing knowledge sambil cuan</p>
+                    <div class="checkmark hidden text-3xl text-green-400 mt-4">✓</div>
+                </div>
+
+                <!-- Goal Card 6 -->
+                <div class="goal-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border-2 border-slate-700 hover:border-purple-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer"
+                    data-goal="fun">
+                    <div class="text-5xl mb-4">🎨</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Just for Fun</h3>
+                    <p class="text-slate-400">Pengen jago coding aja, explore creativity unlimited</p>
+                    <div class="checkmark hidden text-3xl text-green-400 mt-4">✓</div>
+                </div>
+            </div>
+
+            <button id="continue-btn"
+                class="hidden mt-12 mx-auto block bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-4 rounded-full text-lg font-bold hover:scale-105 transition-transform duration-300">
+                Lanjut Belajar →
+            </button>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section py-20 px-4 relative z-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-16">Gen Z Sudah Mulai Coding Journey!</h2>
+
+            <div class="stats-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="stat-card text-center">
+                    <div class="stat-number text-6xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"
+                        data-target="10000">0</div>
+                    <div class="stat-label text-xl text-slate-300 mt-2">Siswa Aktif</div>
+                </div>
+
+                <div class="stat-card text-center">
+                    <div class="stat-number text-6xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+                        data-target="50">0</div>
+                    <div class="stat-label text-xl text-slate-300 mt-2">Project Bisa Dibikin</div>
+                </div>
+
+                <div class="stat-card text-center">
+                    <div class="stat-number text-6xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent"
+                        data-target="95">0</div>
+                    <div class="stat-label text-xl text-slate-300 mt-2">% Sukses Dapet Skill</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Preview Section -->
+    <section class="py-20 px-4 relative z-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-4">Coba Coding Sekarang Juga!</h2>
+            <p class="text-xl text-slate-400 text-center mb-12">Lihat contoh kode yang bakal lo pelajari</p>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="code-preview bg-slate-900 rounded-xl p-6 font-mono">
+                    <div class="code-header flex gap-2 mb-4">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <pre><code id="typewriter" class="text-green-400"></code></pre>
+                </div>
+
+                <div class="flex justify-center mt-6 space-x-4">
+                    <button class="lang-btn px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors"
+                        data-lang="javascript">JavaScript</button>
+                    <button class="lang-btn px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors"
+                        data-lang="python">Python</button>
+                    <button class="lang-btn px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors"
+                        data-lang="html">HTML</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 px-4 relative z-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-16">Apa Kata Mereka?</h2>
+
+            <div class="carousel relative overflow-hidden max-w-4xl mx-auto">
+                <div class="carousel-track flex transition-transform duration-500">
+                    <div class="carousel-slide min-w-full">
+                        <div class="testimonial-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 text-center">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                                class="w-20 h-20 rounded-full mx-auto mb-6" />
+                            <p class="quote text-xl text-slate-300 mb-4">"Gara-gara platform ini gue bisa bikin app
+                                sendiri dalam 3 bulan! Sekarang udah dapet duit dari hasil coding."</p>
+                            <div class="author text-lg font-bold text-purple-400 mb-2">- Budi, 22th</div>
+                            <div class="rating text-yellow-400">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-slide min-w-full">
+                        <div class="testimonial-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 text-center">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg"
+                                class="w-20 h-20 rounded-full mx-auto mb-6" />
+                            <p class="quote text-xl text-slate-300 mb-4">"Dari gaptek banget, sekarang jago bikin
+                                website. Mentor-nya seru banget, ngajarnya gak bikin ngantuk!"</p>
+                            <div class="author text-lg font-bold text-purple-400 mb-2">- Siti, 19th</div>
+                            <div class="rating text-yellow-400">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-slide min-w-full">
+                        <div class="testimonial-card bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 text-center">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg"
+                                class="w-20 h-20 rounded-full mx-auto mb-6" />
+                            <p class="quote text-xl text-slate-300 mb-4">"Pindah kerja jadi programmer setelah belajar
+                                di sini. Gajinya naik 3x lipat! Best decision ever!"</p>
+                            <div class="author text-lg font-bold text-purple-400 mb-2">- Rizki, 25th</div>
+                            <div class="rating text-yellow-400">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    class="carousel-btn prev absolute left-4 top-1/2 -translate-y-1/2 bg-slate-800/80 backdrop-blur-lg w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                    class="carousel-btn next absolute right-4 top-1/2 -translate-y-1/2 bg-slate-800/80 backdrop-blur-lg w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div class="carousel-indicators flex justify-center mt-6 space-x-2">
+                    <button class="indicator w-3 h-3 rounded-full bg-purple-600" data-slide="0"></button>
+                    <button class="indicator w-3 h-3 rounded-full bg-slate-600" data-slide="1"></button>
+                    <button class="indicator w-3 h-3 rounded-full bg-slate-600" data-slide="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-20 px-4 text-center relative z-10">
+        <h2 class="text-5xl font-bold mb-6">Ready to Level Up?</h2>
+        <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">Join 10,000+ Gen Z yang udah mulai coding journey
+            mereka!</p>
+        <button
+            class="bg-gradient-to-r from-purple-600 to-pink-600 px-12 py-4 rounded-full text-xl font-bold hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-2xl">
+            Mulai Gratis Sekarang! 🔥
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-12 px-4 relative z-10">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">CodeGen</span>
+                    </div>
+                    <p class="text-slate-400">Belajar koding seru untuk Gen Z</p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="text-slate-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-slate-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-tiktok text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-slate-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-youtube text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-slate-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-discord text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-500">
+                <p>&copy; 2023 CodeGen. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll Animations (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // Goal Cards Selection
+        const goalCards = document.querySelectorAll('.goal-card');
+        const continueBtn = document.getElementById('continue-btn');
+        let selectedGoal = null;
+
+        goalCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove previous selection
+                goalCards.forEach(c => c.classList.remove('selected', 'border-purple-500', 'glow'));
+
+                // Add selection to clicked card
+                card.classList.add('selected', 'border-purple-500', 'glow');
+                selectedGoal = card.dataset.goal;
+
+                // Show continue button with animation
+                continueBtn.classList.remove('hidden');
+                continueBtn.classList.add('animate-slide-up');
+
+                // Optional: confetti effect
+                createConfetti();
+            });
+        });
+
+        // Counter Animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Trigger on scroll
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const numbers = entry.target.querySelectorAll('.stat-number');
+                    numbers.forEach(num => {
+                        animateCounter(num, parseInt(num.dataset.target));
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Typing Animation
+        const codeSnippets = [
+            {
+                lang: 'javascript',
+                html: 'const <span class="code-line js-function">hello</span> = () => {<br>  console.<span class="code-line js-function">log</span>(<span class="code-line js-string">"Hello World!"</span>);<br>};'
+            },
+            {
+                lang: 'python',
+                html: '<span class="code-line py-keyword">def</span> <span class="code-line py-function">hello</span>():<br>  <span class="code-line py-keyword">print</span>(<span class="code-line js-string">"Hello World!"</span>)'
+            },
+            {
+                lang: 'html',
+                html: '&lt;div <span class="code-line html-attr">class</span>=<span class="code-line js-string">"container"</span>&gt;<br>  &lt;h1&gt;Hello World!&lt;/h1&gt;<br>&lt;/div&gt;'
+            }
+        ];
+
+        let snippetIndex = 0;
+        let typeWriterTimeout;
+        const typewriterEl = document.getElementById('typewriter');
+
+        function displayCode(htmlContent) {
+            if (typewriterEl) {
+                typewriterEl.innerHTML = htmlContent;
+            }
+        }
+
+        function startTypeWriter() {
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            displayCode(codeSnippets[snippetIndex].html);
+
+            typeWriterTimeout = setTimeout(() => {
+                snippetIndex = (snippetIndex + 1) % codeSnippets.length;
+                startTypeWriter();
+            }, 3000);
+        }
+
+        // Start typing animation
+        if (typewriterEl) {
+            startTypeWriter();
+        }
+
+        // Language buttons
+        const langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                const snippetIdx = codeSnippets.findIndex(s => s.lang === lang);
+                if (snippetIdx !== -1) {
+                    snippetIndex = snippetIdx;
+                    startTypeWriter();
+                }
+            });
+        });
+
+        // Carousel
+        const track = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const prevBtn = document.querySelector('.carousel-btn.prev');
+        const nextBtn = document.querySelector('.carousel-btn.next');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentIndex = 0;
+        let autoPlayInterval;
+
+        function updateCarousel() {
+            if (!track) return;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.remove('bg-slate-600');
+                    indicator.classList.add('bg-purple-600');
+                } else {
+                    indicator.classList.remove('bg-purple-600');
+                    indicator.classList.add('bg-slate-600');
+                }
+            });
+        }
+
+        function moveToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateCarousel();
+            }, 5000);
+        }
+
+        if (nextBtn && track) {
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateCarousel();
+                resetAutoPlay();
+            });
+        }
+
+        if (prevBtn && track) {
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateCarousel();
+                resetAutoPlay();
+            });
+        }
+
+        // Indicator clicks
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                moveToSlide(index);
+                resetAutoPlay();
+            });
+        });
+
+        // Auto-play carousel
+        resetAutoPlay();
+
+        // Touch swipe support
+        if (track) {
+            let touchStartX = 0;
+            track.addEventListener('touchstart', e => {
+                touchStartX = e.touches[0].clientX;
+            }, false);
+
+            track.addEventListener('touchend', e => {
+                const touchEndX = e.changedTouches[0].clientX;
+                const diff = touchStartX - touchEndX;
+
+                if (diff > 50) {
+                    if (nextBtn) nextBtn.click();
+                }
+                if (diff < -50) {
+                    if (prevBtn) prevBtn.click();
+                }
+            }, false);
+        }
+
+        // Parallax Mouse Move Effect
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.floating-shape');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.1;
+                const moveX = (x - 0.5) * 50 * speed;
+                const moveY = (y - 0.5) * 50 * speed;
+                shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+
+        // Confetti Effect
+        function createConfetti() {
+            const colors = ['#a855f7', '#ec4899', '#3b82f6', '#10b981'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: 10px;
+                    height: 10px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${Math.random() * 100}vw;
+                    top: -10px;
+                    animation: confetti-fall 3s ease-out forwards;
+                    z-index: 100;
+                `;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('nav button');
+        mobileMenuBtn.addEventListener('click', () => {
+            // Implementation for mobile menu toggle
+            alert('Mobile menu would open here in a full implementation');
+        });
+
+        // Continue button action
+        if (continueBtn) {
+            continueBtn.addEventListener('click', () => {
+                if (selectedGoal) {
+                    alert(`Anda memilih tujuan: ${selectedGoal}. Dalam implementasi penuh, ini akan membawa Anda ke halaman berikutnya.`);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
