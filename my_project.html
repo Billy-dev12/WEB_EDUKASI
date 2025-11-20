@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Impact Tracker - AI Coding Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .impact-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+        
+        .impact-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .progress-ring {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .celebrate {
+            animation: celebrate 0.8s ease-in-out;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-5deg); }
+            50% { transform: scale(1.3) rotate(5deg); }
+            75% { transform: scale(1.2) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+        
+        .bounce-in {
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            70% { transform: scale(0.9); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        .glow:hover {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8 fade-in">
+            <div class="mb-4">
+                <div class="inline-block p-4 bg-white bg-opacity-20 rounded-full floating">
+                    <i class="fas fa-trophy text-yellow-300 text-5xl"></i>
+                </div>
+            </div>
+            <h1 class="text-5xl font-bold text-white mb-4 gradient-text">
+                My Impact Tracker
+            </h1>
+            <p class="text-xl text-white opacity-90 mb-2">Lacak progress bantu teman-teman belajar coding! 🚀</p>
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-full px-6 py-2 inline-block">
+                <span class="text-white font-medium">✨ Every help counts, every impact matters ✨</span>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6 fade-in">
+            <!-- Motivation Quote -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-quote-left text-yellow-400 text-xl"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700" id="motivationQuote">
+                            "Setiap orang yang kamu bantu = satu less frustration di dunia coding!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <!-- Total Helped -->
+                <div class="impact-card bg-gradient-to-br from-green-50 to-green-100 border-green-400 p-6 rounded-xl text-center shadow-lg glow">
+                    <div class="mb-3">
+                        <i class="fas fa-hands-helping text-green-500 text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-green-600 mb-2" id="totalHelped">0</div>
+                    <div class="text-sm text-green-700 font-semibold mb-3">Orang Dibantu</div>
+                    <button onclick="incrementStat('totalHelped')" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full text-sm hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-md">
+                        <i class="fas fa-plus mr-1"></i>Tambah Impact!
+                    </button>
+                </div>
+
+                <!-- Errors Solved -->
+                <div class="impact-card bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 p-6 rounded-xl text-center shadow-lg glow">
+                    <div class="mb-3">
+                        <i class="fas fa-bug text-blue-500 text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-blue-600 mb-2" id="errorsSolved">0</div>
+                    <div class="text-sm text-blue-700 font-semibold mb-3">Error Solved</div>
+                    <button onclick="incrementStat('errorsSolved')" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-200 shadow-md">
+                        <i class="fas fa-plus mr-1"></i>Bug Fixed!
+                    </button>
+                </div>
+
+                <!-- Concepts Explained -->
+                <div class="impact-card bg-gradient-to-br from-purple-50 to-purple-100 border-purple-400 p-6 rounded-xl text-center shadow-lg glow">
+                    <div class="mb-3">
+                        <i class="fas fa-lightbulb text-purple-500 text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-purple-600 mb-2" id="conceptsExplained">0</div>
+                    <div class="text-sm text-purple-700 font-semibold mb-3">Konsep Explained</div>
+                    <button onclick="incrementStat('conceptsExplained')" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm hover:from-purple-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-md">
+                        <i class="fas fa-plus mr-1"></i>Mind Blown!
+                    </button>
+                </div>
+
+                <!-- Projects Started -->
+                <div class="impact-card bg-gradient-to-br from-red-50 to-pink-100 border-red-400 p-6 rounded-xl text-center shadow-lg glow">
+                    <div class="mb-3">
+                        <i class="fas fa-rocket text-red-500 text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-red-600 mb-2" id="projectsStarted">0</div>
+                    <div class="text-sm text-red-700 font-semibold mb-3">Projects Launched</div>
+                    <button onclick="incrementStat('projectsStarted')" class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-4 py-2 rounded-full text-sm hover:from-red-600 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-md">
+                        <i class="fas fa-plus mr-1"></i>Launch It!
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Rings -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <!-- Weekly Goal -->
+                <div class="text-center">
+                    <div class="relative inline-block">
+                        <svg width="120" height="120" class="progress-ring">
+                            <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="8" fill="transparent"/>
+                            <circle cx="60" cy="60" r="50" stroke="#10b981" stroke-width="8" fill="transparent" 
+                                    stroke-dasharray="314" stroke-dashoffset="314" 
+                                    class="progress-ring" id="weeklyProgressRing"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div>
+                                <div class="text-2xl font-bold text-gray-800" id="weeklyProgress">0%</div>
+                                <div class="text-sm text-gray-600">Target Mingguan</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-700">
+                        <span id="weeklyCount">0</span>/5 orang dibantu
+                    </div>
+                </div>
+
+                <!-- Monthly Goal -->
+                <div class="text-center">
+                    <div class="relative inline-block">
+                        <svg width="120" height="120" class="progress-ring">
+                            <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="8" fill="transparent"/>
+                            <circle cx="60" cy="60" r="50" stroke="#3b82f6" stroke-width="8" fill="transparent" 
+                                    stroke-dasharray="314" stroke-dashoffset="314" 
+                                    class="progress-ring" id="monthlyProgressRing"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div>
+                                <div class="text-2xl font-bold text-gray-800" id="monthlyProgress">0%</div>
+                                <div class="text-sm text-gray-600">Target Bulanan</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-700">
+                        <span id="monthlyCount">0</span>/20 orang dibantu
+                    </div>
+                </div>
+
+                <!-- Impact Score -->
+                <div class="text-center">
+                    <div class="relative inline-block">
+                        <svg width="120" height="120" class="progress-ring">
+                            <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="8" fill="transparent"/>
+                            <circle cx="60" cy="60" r="50" stroke="#8b5cf6" stroke-width="8" fill="transparent" 
+                                    stroke-dasharray="314" stroke-dashoffset="314" 
+                                    class="progress-ring" id="impactProgressRing"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div>
+                                <div class="text-2xl font-bold text-gray-800" id="impactScore">0</div>
+                                <div class="text-sm text-gray-600">Impact Score</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-700">
+                        Total kontribusi
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl mb-6 border border-purple-200">
+                <div class="text-center mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">⚡ Quick Impact Actions</h3>
+                    <p class="text-gray-600">Make someone's day better with one click!</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="quickAction('help')" class="bg-gradient-to-r from-green-500 to-emerald-500 text-white py-4 px-6 rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl">
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-hands-helping mr-3 text-xl"></i>
+                            <div class="text-left">
+                                <div class="font-bold">Help a Friend</div>
+                                <div class="text-sm opacity-90">Spread the coding love! 💚</div>
+                            </div>
+                        </div>
+                    </button>
+                    <button onclick="quickAction('explain')" class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-4 px-6 rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl">
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-graduation-cap mr-3 text-xl"></i>
+                            <div class="text-left">
+                                <div class="font-bold">Explain Concept</div>
+                                <div class="text-sm opacity-90">Light up someone's mind! 💡</div>
+                            </div>
+                        </div>
+                    </button>
+                    <button onclick="quickAction('debug')" class="bg-gradient-to-r from-purple-500 to-violet-500 text-white py-4 px-6 rounded-xl hover:from-purple-600 hover:to-violet-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl">
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-bug mr-3 text-xl"></i>
+                            <div class="text-left">
+                                <div class="font-bold">Squash a Bug</div>
+                                <div class="text-sm opacity-90">Be the hero they need! 🦸‍♂️</div>
+                            </div>
+                        </div>
+                    </button>
+                    <button onclick="quickAction('project')" class="bg-gradient-to-r from-red-500 to-pink-500 text-white py-4 px-6 rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl">
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-rocket mr-3 text-xl"></i>
+                            <div class="text-left">
+                                <div class="font-bold">Launch Project</div>
+                                <div class="text-sm opacity-90">Dreams into reality! 🚀</div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Achievements -->
+            <div class="mb-6">
+                <h3 class="font-bold text-gray-800 mb-3">🏆 Pencapaian Terbaru</h3>
+                <div id="achievementsList" class="space-y-2">
+                    <div class="text-gray-500 text-sm">Belum ada pencapaian. Mulai bantu teman untuk mengisi ini!</div>
+                </div>
+            </div>
+
+            <!-- Daily Motivation -->
+            <div class="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-white p-8 rounded-2xl text-center shadow-2xl">
+                <!-- Background decoration -->
+                <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                    <div class="absolute top-4 left-4 w-16 h-16 bg-white rounded-full floating"></div>
+                    <div class="absolute top-8 right-8 w-8 h-8 bg-white rounded-full floating" style="animation-delay: 1s;"></div>
+                    <div class="absolute bottom-6 left-12 w-12 h-12 bg-white rounded-full floating" style="animation-delay: 2s;"></div>
+                    <div class="absolute bottom-4 right-4 w-6 h-6 bg-white rounded-full floating" style="animation-delay: 0.5s;"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <div class="mb-4">
+                        <i class="fas fa-heart text-4xl pulse"></i>
+                    </div>
+                    <h3 class="font-bold text-2xl mb-4">💪 Your Mission Matters!</h3>
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 mb-4">
+                        <p class="text-lg font-medium leading-relaxed" id="dailyMission">
+                            "Setiap kali kamu bantu satu orang memahami coding, kamu bukan cuma solve error — 
+                            kamu ubah frustration jadi excitement, hopelessness jadi confidence!"
+                        </p>
+                    </div>
+                    <div class="flex justify-center items-center space-x-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-yellow-300 mr-2"></i>
+                            <span class="font-semibold">You're making a difference!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-white mt-8">
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
+                <div class="flex justify-center items-center mb-3">
+                    <i class="fas fa-chart-line text-2xl mr-3"></i>
+                    <span class="text-lg font-semibold">Track your impact, celebrate small wins!</span>
+                    <i class="fas fa-trophy text-2xl ml-3 text-yellow-300"></i>
+                </div>
+                <p class="text-sm opacity-90 mb-2">Data tersimpan otomatis di browser-mu 💾</p>
+                <div class="flex justify-center items-center space-x-6 text-sm">
+                    <div class="flex items-center">
+                        <i class="fas fa-heart text-red-300 mr-2"></i>
+                        <span>Made with love for coders</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-code text-blue-300 mr-2"></i>
+                        <span>Keep coding, keep helping!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize stats from localStorage
+        const stats = {
+            totalHelped: parseInt(localStorage.getItem('totalHelped')) || 0,
+            errorsSolved: parseInt(localStorage.getItem('errorsSolved')) || 0,
+            conceptsExplained: parseInt(localStorage.getItem('conceptsExplained')) || 0,
+            projectsStarted: parseInt(localStorage.getItem('projectsStarted')) || 0,
+            weeklyHelped: parseInt(localStorage.getItem('weeklyHelped')) || 0,
+            monthlyHelped: parseInt(localStorage.getItem('monthlyHelped')) || 0,
+            achievements: JSON.parse(localStorage.getItem('achievements')) || []
+        };
+
+        // Motivation quotes
+        const motivationQuotes = [
+            "Setiap orang yang kamu bantu = satu less frustration di dunia coding!",
+            "Kamu bukan cuma ngasih solusi, tapi ngasih hope buat terus belajar!",
+            "Dari 'Aku gabisa coding' jadi 'Wah ternyata bisa!' — itu karena kamu!",
+            "Small actions, big impact. Setiap bantuan berarti buat mereka!",
+            "Ingat momen ketika kamu pertama kali paham coding? Sekarang kamu yang bikin momen itu untuk orang lain!",
+            "Dunia butuh lebih banyak developer yang peduli kayak kamu!",
+            "Setiap error yang kamu solve = satu teman yang gak jadi nyerah coding!"
+        ];
+
+        // Mission statements
+        const missionStatements = [
+            "Setiap kali kamu bantu satu orang memahami coding, kamu bukan cuma solve error — kamu ubah frustration jadi excitement!",
+            "Mission: Pastikan tidak ada teman sekelas yang drop coding karena merasa hopeless. Kamu adalah safety net mereka!",
+            "Impact bukan tentang jumlah, tapi tentang changed lives. Setiap 'thank you' adalah bukti kamu mengubah hidup seseorang!",
+            "Kamu adalah bukti bahwa dengan tools yang tepat (AI) dan hati yang peduli, siapa pun bisa jago coding!"
+        ];
+
+        // Initialize the dashboard
+        function initDashboard() {
+            // Update all stat displays
+            updateStatDisplays();
+            
+            // Update progress rings
+            updateProgressRings();
+            
+            // Set random motivation
+            setRandomMotivation();
+            
+            // Load achievements
+            loadAchievements();
+        }
+
+        // Update stat displays
+        function updateStatDisplays() {
+            document.getElementById('totalHelped').textContent = stats.totalHelped;
+            document.getElementById('errorsSolved').textContent = stats.errorsSolved;
+            document.getElementById('conceptsExplained').textContent = stats.conceptsExplained;
+            document.getElementById('projectsStarted').textContent = stats.projectsStarted;
+            document.getElementById('weeklyCount').textContent = stats.weeklyHelped;
+            document.getElementById('monthlyCount').textContent = stats.monthlyHelped;
+        }
+
+        // Update progress rings
+        function updateProgressRings() {
+            // Weekly progress (target: 5 people)
+            const weeklyProgress = Math.min((stats.weeklyHelped / 5) * 100, 100);
+            const weeklyOffset = 314 - (314 * weeklyProgress / 100);
+            document.getElementById('weeklyProgressRing').style.strokeDashoffset = weeklyOffset;
+            document.getElementById('weeklyProgress').textContent = Math.round(weeklyProgress) + '%';
+
+            // Monthly progress (target: 20 people)
+            const monthlyProgress = Math.min((stats.monthlyHelped / 20) * 100, 100);
+            const monthlyOffset = 314 - (314 * monthlyProgress / 100);
+            document.getElementById('monthlyProgressRing').style.strokeDashoffset = monthlyOffset;
+            document.getElementById('monthlyProgress').textContent = Math.round(monthlyProgress) + '%';
+
+            // Impact score (composite score)
+            const impactScore = stats.totalHelped + stats.errorsSolved + stats.conceptsExplained + stats.projectsStarted;
+            const impactProgress = Math.min((impactScore / 50) * 100, 100);
+            const impactOffset = 314 - (314 * impactProgress / 100);
+            document.getElementById('impactProgressRing').style.strokeDashoffset = impactOffset;
+            document.getElementById('impactScore').textContent = impactScore;
+        }
+
+        // Set random motivation
+        function setRandomMotivation() {
+            const randomQuote = motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
+            const randomMission = missionStatements[Math.floor(Math.random() * missionStatements.length)];
+            
+            document.getElementById('motivationQuote').textContent = `"${randomQuote}"`;
+            document.getElementById('dailyMission').textContent = `"${randomMission}"`;
+        }
+
+        // Increment stat
+        function incrementStat(statName) {
+            stats[statName]++;
+            
+            // Also increment weekly and monthly if it's totalHelped
+            if (statName === 'totalHelped') {
+                stats.weeklyHelped++;
+                stats.monthlyHelped++;
+                
+                // Add achievement
+                addAchievement(`Membantu orang ke-${stats.totalHelped}`);
+            }
+            
+            // Save to localStorage
+            saveStats();
+            
+            // Update display
+            updateStatDisplays();
+            updateProgressRings();
+            
+            // Celebrate
+            celebrate(statName);
+        }
+
+        // Quick actions
+        function quickAction(action) {
+            const actions = {
+                help: { stat: 'totalHelped', message: 'Satu teman terbantu! 🎉' },
+                explain: { stat: 'conceptsExplained', message: 'Satu konsep berhasil dijelaskan! 📚' },
+                debug: { stat: 'errorsSolved', message: 'Satu error berhasil diselesaikan! 🐛✅' },
+                project: { stat: 'projectsStarted', message: 'Satu project baru dimulai! 🚀' }
+            };
+            
+            const actionConfig = actions[action];
+            if (actionConfig) {
+                // Increment the main stat
+                stats[actionConfig.stat]++;
+                
+                // Also increment weekly/monthly if it's help action
+                if (action === 'help') {
+                    stats.weeklyHelped++;
+                    stats.monthlyHelped++;
+                    addAchievement(`Membantu orang ke-${stats.totalHelped}`);
+                } else {
+                    addAchievement(actionConfig.message);
+                }
+                
+                saveStats();
+                updateStatDisplays();
+                updateProgressRings();
+                celebrate(actionConfig.stat);
+                
+                // Show confirmation
+                showNotification(actionConfig.message);
+            }
+        }
+
+        // Add achievement
+        function addAchievement(achievement) {
+            const timestamp = new Date().toLocaleDateString('id-ID');
+            stats.achievements.unshift({
+                text: achievement,
+                date: timestamp
+            });
+            
+            // Keep only last 10 achievements
+            if (stats.achievements.length > 10) {
+                stats.achievements = stats.achievements.slice(0, 10);
+            }
+            
+            saveStats();
+            loadAchievements();
+        }
+
+        // Load achievements
+        function loadAchievements() {
+            const list = document.getElementById('achievementsList');
+            
+            if (stats.achievements.length === 0) {
+                list.innerHTML = '<div class="text-gray-500 text-sm">Belum ada pencapaian. Mulai bantu teman untuk mengisi ini!</div>';
+                return;
+            }
+            
+            list.innerHTML = stats.achievements.map(achievement => `
+                <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-yellow-500 mr-3"></i>
+                        <span class="text-gray-700">${achievement.text}</span>
+                    </div>
+                    <span class="text-gray-500 text-sm">${achievement.date}</span>
+                </div>
+            `).join('');
+        }
+
+        // Celebrate achievement
+        function celebrate(statName) {
+            const element = document.getElementById(statName);
+            if (element) {
+                element.classList.add('celebrate');
+                setTimeout(() => {
+                    element.classList.remove('celebrate');
+                }, 500);
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 fade-in';
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Save stats to localStorage
+        function saveStats() {
+            localStorage.setItem('totalHelped', stats.totalHelped);
+            localStorage.setItem('errorsSolved', stats.errorsSolved);
+            localStorage.setItem('conceptsExplained', stats.conceptsExplained);
+            localStorage.setItem('projectsStarted', stats.projectsStarted);
+            localStorage.setItem('weeklyHelped', stats.weeklyHelped);
+            localStorage.setItem('monthlyHelped', stats.monthlyHelped);
+            localStorage.setItem('achievements', JSON.stringify(stats.achievements));
+        }
+
+        // Reset weekly stats (you can call this every Monday)
+        function resetWeeklyStats() {
+            stats.weeklyHelped = 0;
+            saveStats();
+            updateStatDisplays();
+            updateProgressRings();
+            showNotification('Stats mingguan telah direset! 🗓️');
+        }
+
+        // Reset monthly stats (you can call this every 1st of month)
+        function resetMonthlyStats() {
+            stats.monthlyHelped = 0;
+            saveStats();
+            updateStatDisplays();
+            updateProgressRings();
+            showNotification('Stats bulanan telah direset! 📅');
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initDashboard);
+
+        // Add reset buttons for testing (you can remove these in production)
+        document.addEventListener('DOMContentLoaded', function() {
+            const resetDiv = document.createElement('div');
+            resetDiv.className = 'fixed bottom-4 left-4 space-x-2';
+            resetDiv.innerHTML = `
+                <button onclick="resetWeeklyStats()" class="bg-gray-500 text-white px-3 py-1 rounded text-xs">Reset Mingguan</button>
+                <button onclick="resetMonthlyStats()" class="bg-gray-700 text-white px-3 py-1 rounded text-xs">Reset Bulanan</button>
+            `;
+            document.body.appendChild(resetDiv);
+        });
+    </script>
+</body>
+</html>
