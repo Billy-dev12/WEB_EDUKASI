@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Coding Companion - Roadmap & Prompt Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #667eea;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #667eea }
+        }
+        
+        .prompt-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .roadmap-step {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .roadmap-step:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .step-number {
+            position: absolute;
+            left: -0.75rem;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-12 fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                🤖 AI Coding Helper
+            </h1>
+            <p class="text-2xl text-white opacity-90 mb-6 font-semibold">
+                <span class="typewriter block">Coding jadi GAMPANG banget! 🔥</span>
+            </p>
+            <p class="text-lg text-white opacity-80">
+                Copy → Paste → DONE! ✨
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="max-w-6xl mx-auto">
+            <!-- Roadmap Section -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">
+                    🗺️ Cara Jadi Jago Coding (MUDAH!)
+                </h2>
+                <p class="text-gray-600 text-center mb-8 text-lg">Cuma 6 langkah → Langsung PRO! 🚀</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Left Column -->
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="roadmap-step">
+                            <div class="step-number">1</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">🆓 Daftar AI (GRATIS!)</h3>
+                            <div class="bg-purple-50 p-4 rounded-lg mb-3">
+                                <div class="grid grid-cols-2 gap-2 text-center">
+                                    <div class="bg-white p-2 rounded font-semibold text-purple-700">🤖 ChatGPT</div>
+                                    <div class="bg-white p-2 rounded font-semibold text-purple-700">✨ Gemini</div>
+                                    <div class="bg-white p-2 rounded font-semibold text-purple-700">🎯 Claude</div>
+                                    <div class="bg-white p-2 rounded font-semibold text-purple-700">🔍 Perplexity</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 font-medium">Pilih satu → Daftar pakai email → DONE! ✅</p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="roadmap-step">
+                            <div class="step-number">2</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">🎯 Belajar Nanya ke AI</h3>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-3">
+                                <p class="text-blue-800 font-bold text-lg text-center">✨ FORMULA AJAIB ✨</p>
+                                <div class="bg-white p-3 rounded mt-2 border-2 border-blue-200">
+                                    <p class="text-blue-700 font-mono text-center">
+                                        "Aku pemula [BAHASA], <br>bantu buat [MAU APA]"
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 font-medium text-center">Makin jelas nanya → Makin bagus jawaban! 🎯</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="roadmap-step">
+                            <div class="step-number">3</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">⚡ Pakai Generator di Bawah</h3>
+                            <div class="bg-yellow-100 p-3 rounded-lg text-center">
+                                <p class="text-yellow-800 font-bold">📝 TINGGAL COPY-PASTE!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-8">
+                        <!-- Step 4 -->
+                        <div class="roadmap-step">
+                            <div class="step-number">4</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">📅 Rutin Harian (Cuma 1 Jam!)</h3>
+                            <div class="bg-green-50 p-4 rounded-lg mb-3">
+                                <div class="space-y-2">
+                                    <div class="flex items-center bg-white p-2 rounded">
+                                        <span class="text-2xl mr-3">💭</span>
+                                        <span class="text-green-700 font-medium">15 menit: Tanya AI</span>
+                                    </div>
+                                    <div class="flex items-center bg-white p-2 rounded">
+                                        <span class="text-2xl mr-3">⌨️</span>
+                                        <span class="text-green-700 font-medium">30 menit: Coding</span>
+                                    </div>
+                                    <div class="flex items-center bg-white p-2 rounded">
+                                        <span class="text-2xl mr-3">✅</span>
+                                        <span class="text-green-700 font-medium">15 menit: Review</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 font-medium text-center">1 jam sehari → Jadi PRO dalam 3 bulan! 🔥</p>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="roadmap-step">
+                            <div class="step-number">5</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">🚀 Bikin Project Keren</h3>
+                            <div class="bg-yellow-50 p-4 rounded-lg mb-3">
+                                <div class="grid grid-cols-2 gap-2 text-center">
+                                    <div class="bg-white p-2 rounded">
+                                        <span class="text-2xl block">🧮</span>
+                                        <span class="text-yellow-700 font-medium text-sm">Kalkulator</span>
+                                    </div>
+                                    <div class="bg-white p-2 rounded">
+                                        <span class="text-2xl block">📝</span>
+                                        <span class="text-yellow-700 font-medium text-sm">To-do App</span>
+                                    </div>
+                                    <div class="bg-white p-2 rounded">
+                                        <span class="text-2xl block">👤</span>
+                                        <span class="text-yellow-700 font-medium text-sm">Portfolio</span>
+                                    </div>
+                                    <div class="bg-white p-2 rounded">
+                                        <span class="text-2xl block">🌤️</span>
+                                        <span class="text-yellow-700 font-medium text-sm">Weather App</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 font-medium text-center">AI bantuin dari awal sampai online! 🌐</p>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div class="roadmap-step">
+                            <div class="step-number">6</div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">🤝 Gabung Komunitas</h3>
+                            <div class="bg-pink-50 p-3 rounded-lg text-center">
+                                <p class="text-pink-700 font-bold">💬 Discord • Telegram • WhatsApp Group</p>
+                                <p class="text-pink-600 text-sm mt-1">Share progress → Dapet support! 🎉</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Prompt Generator Section -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">
+                    <i class="fas fa-magic text-purple-600 mr-3"></i>
+                    AI Prompt Generator
+                </h2>
+                <p class="text-gray-600 text-center mb-8">Pilih kategori, isi detail, lalu COPY-PASTE ke ChatGPT!</p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Prompt Category 1 -->
+                    <div class="prompt-card bg-purple-50 border-2 border-purple-200 rounded-xl p-6" onclick="selectCategory('debug')">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-bug text-purple-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-purple-800">Debug Error</h3>
+                        </div>
+                        <p class="text-purple-700 text-sm">Dapet error? Bingung artinya? Ini solusinya!</p>
+                    </div>
+
+                    <!-- Prompt Category 2 -->
+                    <div class="prompt-card bg-blue-50 border-2 border-blue-200 rounded-xl p-6" onclick="selectCategory('explain')">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-graduation-cap text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-blue-800">Jelaskan Konsep</h3>
+                        </div>
+                        <p class="text-blue-700 text-sm">Bingung dengan teori? Minta penjelasan sederhana!</p>
+                    </div>
+
+                    <!-- Prompt Category 3 -->
+                    <div class="prompt-card bg-green-50 border-2 border-green-200 rounded-xl p-6" onclick="selectCategory('project')">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-lightbulb text-green-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-green-800">Cari Ide Project</h3>
+                        </div>
+                        <p class="text-green-700 text-sm">Mau buat project tapi bingung mulai dari mana?</p>
+                    </div>
+
+                    <!-- Prompt Category 4 -->
+                    <div class="prompt-card bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6" onclick="selectCategory('code')">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-code text-yellow-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-yellow-800">Generate Code</h3>
+                        </div>
+                        <p class="text-yellow-700 text-sm">Butuh contoh code untuk fitur tertentu?</p>
+                    </div>
+
+                    <!-- Prompt Category 5 -->
+                    <div class="prompt-card bg-red-50 border-2 border-red-200 rounded-xl p-6" onclick="selectCategory('improve')">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-red-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-rocket text-red-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-red-800">Improve Code</h3>
+                        </div>
+                        <p class="text-red-700 text-sm">Mau code-mu lebih efisien dan clean?</p>
+                    </div>
+
+                    <!-- Prompt Category 6 -->
+                    <div class="prompt-card bg-indigo-50 border-2 border-indigo-200 rounded-xl p-6" onclick="selectCategory('career')">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-briefcase text-indigo-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-indigo-800">Karir & Roadmap</h3>
+                        </div>
+                        <p class="text-indigo-700 text-sm">Mau tau langkah jadi web developer?</p>
+                    </div>
+                </div>
+
+                <!-- Dynamic Prompt Generator -->
+                <div id="promptGenerator" class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+                    <div class="text-center text-gray-500">
+                        <i class="fas fa-mouse-pointer text-2xl mb-2"></i>
+                        <p>Pilih kategori di atas untuk generate prompt!</p>
+                    </div>
+                </div>
+
+                <!-- Generated Prompt Output -->
+                <div id="promptOutput" class="hidden mt-6">
+                    <h3 class="font-bold text-lg text-gray-800 mb-3">🎯 Prompt yang Sudah Jadi:</h3>
+                    <div class="bg-gray-800 rounded-lg p-4 relative">
+                        <textarea id="generatedPrompt" class="w-full h-40 bg-gray-900 text-green-400 font-mono text-sm p-4 rounded border-0 resize-none" readonly></textarea>
+                        <button onclick="copyPrompt()" class="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fas fa-copy mr-2"></i>Copy
+                        </button>
+                    </div>
+                    <div class="mt-3 text-sm text-gray-600">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Copy prompt di atas, paste ke ChatGPT/Gemini/Claude, dan lihat magic-nya! ✨
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mt-8 fade-in">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    💡 4 Tips WAJIB Pakai AI
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl text-white text-center">
+                        <div class="text-3xl mb-2">🎯</div>
+                        <h4 class="font-bold text-lg mb-2">Jelas & Spesifik</h4>
+                        <p class="text-sm opacity-90">"Aku pemula PHP" ✅<br>"Aku newbie" ❌</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white text-center">
+                        <div class="text-3xl mb-2">📝</div>
+                        <h4 class="font-bold text-lg mb-2">Kasih Konteks</h4>
+                        <p class="text-sm opacity-90">Ceritain mau bikin apa<br>& buat siapa</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white text-center">
+                        <div class="text-3xl mb-2">📋</div>
+                        <h4 class="font-bold text-lg mb-2">Minta Step-by-Step</h4>
+                        <p class="text-sm opacity-90">Biar gak overwhelmed<br>& mudah diikuti</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 rounded-xl text-white text-center">
+                        <div class="text-3xl mb-2">❓</div>
+                        <h4 class="font-bold text-lg mb-2">Tanya Lagi!</h4>
+                        <p class="text-sm opacity-90">Belum paham?<br>"Jelasin lebih simple!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-12 text-white opacity-80">
+            <p>Dibuat dengan <i class="fas fa-heart text-red-400"></i> untuk calon developer Indonesia</p>
+            <p class="text-sm mt-2">💡 Tips: Bookmark halaman ini buat referensi belajar sehari-hari!</p>
+        </div>
+    </div>
+
+    <script>
+        // Prompt templates
+        const promptTemplates = {
+            debug: {
+                title: "Debug Error Code",
+                template: `Hai! Saya pemula di [PHP/LARAVEL/HTML/CSS/JS]. Saya dapat error ini:
+
+[PASTE ERROR MESSAGE DISINI]
+
+Tolong bantu saya:
+1. Jelaskan error ini artinya apa? (pakai bahasa yang sederhana)
+2. Apa penyebab utamanya?
+3. Bagaimana cara memperbaikinya?
+4. Kasih contoh code yang benar
+
+Terima kasih!`,
+                placeholder: "Contoh: Parse error: syntax error, unexpected '}' in /path/to/file.php on line 15"
+            },
+            
+            explain: {
+                title: "Jelaskan Konsep Programming",  
+                template: `Jelaskan tentang [NAMA KONSEP] dengan bahasa yang sangat sederhana.
+
+Saya benar-benar pemula, jadi:
+1. Gunakan analogi sehari-hari yang mudah dimengerti
+2. Kasih contoh code sederhana
+3. Jelaskan manfaatnya dalam project nyata
+4. Kasih contoh kasus penggunaannya
+
+Konsep yang mau saya pahami: [FUNCTION/LOOP/DATABASE/VARIABLE/OOP/ARRAY]`,
+                placeholder: "Contoh: OOP, Function, Database Relationship, dll"
+            },
+            
+            project: {
+                title: "Cari Ide Project",
+                template: `Saya pemula [BAHASA PEMROGRAMAN] dan mau belajar dengan buat project.
+
+Bantu berikan:
+1. 5 ide project sederhana yang bisa diselesaikan dalam 1-2 minggu
+2. Teknologi dan tools yang dibutuhkan (yang mudah untuk pemula)  
+3. Step-by-step sederhana untuk memulai project pertama
+4. Estimasi waktu dan tingkat kesulitan
+5. Contoh hasil akhir yang diharapkan
+
+Bahasa yang saya pakai: [PHP/LARAVEL/HTML/CSS/JS]
+Level skill: Pemula total`,
+                placeholder: "Contoh: PHP, Laravel, JavaScript, dll"
+            },
+            
+            code: {
+                title: "Generate Contoh Code", 
+                template: `Saya pemula [BAHASA/Framework] dan mau buat [FITUR/COMPONENT].
+
+Tolong buatkan:
+1. Contoh code sederhana untuk [FITUR YANG DIMAU]
+2. Penjelasan baris per baris (comment di setiap bagian penting)
+3. Cara implementasinya di project
+4. Tips best practice-nya
+
+Fitur yang mau dibuat: [FORM LOGIN/CRUD OPERATION/API CALL/DATABASE CONNECTION]
+Bahasa: [PHP/LARAVEL/JS]`,
+                placeholder: "Contoh: form login, CRUD blog, koneksi database, dll"
+            },
+            
+            improve: {
+                title: "Improve & Optimize Code",
+                template: `Saya punya code [BAHASA] berikut:
+
+[PASTE CODE DISINI]
+
+Tolong bantu:
+1. Review dan kasih saran improvement
+2. Optimasi untuk performa dan readability  
+3. Jelaskan bagian mana yang bisa diperbaiki
+4. Kasih contoh code yang sudah di-improve
+5. Tips untuk menulis code yang lebih clean
+
+Terima kasih!`,
+                placeholder: "Paste code-mu di sini..."
+            },
+            
+            career: {
+                title: "Roadmap Karir Developer", 
+                template: `Saya ingin jadi [JENIS DEVELOPER] dalam waktu [X BULAN/TAHUN].
+
+Bantu buatkan:
+1. Roadmap belajar step-by-step 
+2. Skill yang harus dikuasai (prioritas)
+3. Project yang harus dikerjakan di setiap stage
+4. Resources belajar yang recommended
+5. Tips untuk dapat kerja/internship
+
+Target karir: [FRONTEND/BACKEND/FULL-STACK/WEB DEVELOPER]
+Waktu: [3 BULAN/6 BULAN/1 TAHUN]`,
+                placeholder: "Contoh: Frontend Developer dalam 6 bulan"
+            }
+        };
+
+        let selectedCategory = '';
+
+        function selectCategory(category) {
+            selectedCategory = category;
+            renderPromptForm();
+        }
+
+        function renderPromptForm() {
+            const template = promptTemplates[selectedCategory];
+            const generator = document.getElementById('promptGenerator');
+            
+            generator.innerHTML = `
+                <h3 class="font-bold text-xl text-gray-800 mb-4">${template.title}</h3>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Detail yang perlu diisi:</label>
+                    <input type="text" 
+                           id="promptDetail" 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                           placeholder="${template.placeholder}">
+                </div>
+                <button onclick="generatePrompt()" 
+                        class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300">
+                    <i class="fas fa-wand-magic-sparkles mr-2"></i>Generate Prompt!
+                </button>
+            `;
+            
+            document.getElementById('promptOutput').classList.add('hidden');
+        }
+
+        function generatePrompt() {
+            const detail = document.getElementById('promptDetail').value;
+            const template = promptTemplates[selectedCategory];
+            
+            if (!detail.trim()) {
+                alert('Isi detail dulu ya!');
+                return;
+            }
+            
+            let finalPrompt = template.template;
+            
+            // Replace placeholders based on category
+            if (selectedCategory === 'debug') {
+                finalPrompt = finalPrompt.replace('[PASTE ERROR MESSAGE DISINI]', detail);
+            } else if (selectedCategory === 'explain') {
+                finalPrompt = finalPrompt.replace('[NAMA KONSEP]', detail);
+            } else if (selectedCategory === 'project') {
+                finalPrompt = finalPrompt.replace('[BAHASA PEMROGRAMAN]', detail);
+            } else if (selectedCategory === 'code') {
+                finalPrompt = finalPrompt.replace('[FITUR YANG DIMAU]', detail);
+            } else if (selectedCategory === 'improve') {
+                finalPrompt = finalPrompt.replace('[PASTE CODE DISINI]', detail);
+            } else if (selectedCategory === 'career') {
+                finalPrompt = finalPrompt.replace('[JENIS DEVELOPER]', detail.split(' dalam ')[0])
+                                       .replace('[X BULAN/TAHUN]', detail.split(' dalam ')[1] || '6 bulan');
+            }
+            
+            document.getElementById('generatedPrompt').value = finalPrompt;
+            document.getElementById('promptOutput').classList.remove('hidden');
+            
+            // Scroll to result
+            document.getElementById('promptOutput').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyPrompt() {
+            const promptText = document.getElementById('generatedPrompt');
+            promptText.select();
+            document.execCommand('copy');
+            
+            // Show confirmation
+            const btn = document.querySelector('#promptOutput button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check mr-2"></i>Copied!';
+            btn.classList.remove('bg-green-600');
+            btn.classList.add('bg-green-700');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('bg-green-700');
+                btn.classList.add('bg-green-600');
+            }, 2000);
+        }
+
+        // Add hover effects to prompt cards
+        document.querySelectorAll('.prompt-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
